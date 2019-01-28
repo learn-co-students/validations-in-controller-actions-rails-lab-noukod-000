@@ -1,20 +1,29 @@
-class AuthorsController < ApplicationController
+class PostsController < ApplicationController
+  before_action :set_post!, only: [:show, :edit, :update]
+
   def show
-    @author = Author.find(params[:id])
   end
 
-  def new
+  def edit
   end
 
-  def create
-    @author = Author.create!(author_params)
+  def update
+    @post.update(post_params)
 
-    redirect_to author_path(@author)
+    if @post.save
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
   end
 
   private
 
-  def author_params
-    params.permit(:email, :name)
+  def post_params
+    params.permit(:category, :content, :title)
+  end
+
+  def set_post!
+    @post = Post.find(params[:id])
   end
 end
