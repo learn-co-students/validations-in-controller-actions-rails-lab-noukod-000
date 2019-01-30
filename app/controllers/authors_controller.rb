@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  before_action :set_post!, only: [:show, :create, :edit, :update]
+
   def show
     @author = Author.find(params[:id])
   end
@@ -8,9 +10,23 @@ class AuthorsController < ApplicationController
 
   def create
     @author = Author.create!(author_params)
-
-    redirect_to author_path(@author)
+    # Run the validations WITHOUT attempting to save to the database, returning
+    # true if the Post is valid, and false if it's not.
+    if @author.valid?
+      # If--and only if--the post is valid, do what we usually do.
+      @author.save
+      # This returns a status_code of 302, which instructs the browser to
+      # perform a NEW REQUEST! (AKA: throw @post away and let the show action
+      # worry about re-reading it from the database)
+      redirect_to post_path(@author)
+    else
+      # If the post is invalid, hold on to @post, because it is now full of
+      # useful error messages, and re-render the :new page, which knows how
+      # to display them alongside the user's entries.
+      render :new
+    end
   end
+  
 
   private
 
