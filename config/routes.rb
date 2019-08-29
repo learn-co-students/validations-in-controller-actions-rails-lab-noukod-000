@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get "/posts/:id", to: "posts#show", as: "post"
   get "/posts/:id/edit", to: "posts#edit", as: "edit_post"
   patch "/posts/:id", to: "posts#update"
+  resources :posts, only: [:show, :edit, :update, :new, :create, :destroy, :index]
+  resources :authors, only: [:show, :edit, :update, :new, :create, :destroy, :index]
 end
