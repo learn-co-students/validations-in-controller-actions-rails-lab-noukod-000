@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bundler'
 gem 'rails', '5'
+gem 'rails-controller-testing'
 gem 'sqlite3', '~>1.3.6'
 gem 'rspec-rails'
 gem 'sass-rails', '~> 5.0'
